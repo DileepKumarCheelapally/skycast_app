@@ -1,15 +1,18 @@
 class HomeController < ApplicationController
   def index
-    
+
     @locations = Location.where(user_id: session[:userid]).order('created_at DESC').limit(4)
     if @locations.count > 0
       @lat = @locations.first.latitude
       @lng = @locations.first.longitude
+      puts "putting location latitude"
+      puts @lat
 
 
     	# @forecast = JSON.parse(forecasting.get("https://api.forecast.io/forecast/"+forecastAPIkey+"/"+@lat.to_s+","+@lng.to_s).body)
       @forecast = ForecastIO.forecast(@lat, @lng)
-
+      puts "putting forecast data after api call"
+      puts @forecast
     	@currentweather = @forecast["currently"]
       @dailyWeather = @forecast["daily"]["data"].first(7)
       puts @dailyWeather.first["time"]
