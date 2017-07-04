@@ -36,6 +36,18 @@ class UsersController < ApplicationController
       @user.save
       @userid = @user.id
       session[:userid] = @userid
+      # @location = Location.new()
+      # # if Rails.env.production?
+      # #   request.remote_ip
+      # # else
+      # #   Net::HTTP.get(URI.parse('http://checkip.amazonaws.com/')).squish
+      # # end
+      #
+      # @location.city = Geocoder.search("204.57.220.1")
+      # puts @location.city
+      # @location.user_id = @userid
+      # @location.save
+      # puts @userid
       @location = Location.new()
       # if Rails.env.production?
       #   request.remote_ip
@@ -43,7 +55,10 @@ class UsersController < ApplicationController
       #   Net::HTTP.get(URI.parse('http://checkip.amazonaws.com/')).squish
       # end
 
-      @location.city = request.location.city
+      @loc = Geocoder.search(request.remote_ip)
+      @location.city = @loc[0].city
+      puts "putting location city"
+      puts @location.city
       @location.user_id = @userid
       @location.save
       puts @userid

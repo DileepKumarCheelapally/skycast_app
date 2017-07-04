@@ -1,5 +1,6 @@
 class HomeController < ApplicationController
   def index
+    
     @locations = Location.where(user_id: session[:userid]).order('created_at DESC').limit(4)
     if @locations.count > 0
       @lat = @locations.first.latitude
