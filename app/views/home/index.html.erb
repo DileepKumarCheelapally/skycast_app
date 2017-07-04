@@ -1,0 +1,87 @@
+
+<div class="hero" data-bg-image="/assets/banner.png">
+  <div class="container">
+    <!--form action="" class="find-location" onsubmit="findLocationWeather()">
+      <input type="text" placeholder="Find your location...">
+      <input type="submit" value="Find">
+    </form-->
+    <%= form_tag("/locations", method: "post", class:"find-location") do %>
+      <input type="text" name="city" placeholder="Find your location...">
+      <input type="submit" value="Find">
+    <% end %>
+
+  </div>
+</div>
+<div class="forecast-table">
+  <div class="container">
+    <div class="forecast-container">
+      <div class="today forecast">
+        <div class="forecast-header">
+          <div class="day"><%= Time.at(@currentweather["time"]).strftime('%A') %></div>
+          <div class="date"><%= Time.at(@currentweather["time"]).strftime('%d') %> <%= Time.at(@currentweather["time"]).strftime('%b') %></div>
+        </div> <!-- .forecast-header -->
+        <div class="forecast-content">
+          <% if @locations.count > 0 %>
+          <div class="location"><%= @locations.first.city %></div>
+          <a href="/home/visualize"><button class="btn btn-succes">Visualize</button></a>
+          <% end %>
+          <div class="degree">
+            <div class="num"><%= @currentweather["temperature"]%><sup>o</sup>F</div>
+            <div class="forecast-icon">
+              <img src="/assets/icons/<%=@currentweather["icon"]%>.svg" alt="" width=90>
+            </div>
+          </div>
+          <!-- <span><img src="/assets/icon-wind.png" alt=""><%=@currentweather["windSpeed"]%>m/h</span> -->
+        </div>
+      </div>
+      <% @dailyWeather.each do |day| %>
+      <div class="forecast">
+        <div class="forecast-header">
+          <%@time = Time.at(day["time"])%>
+          <%@gmt = @time.getgm%>
+          <div class="day"><%= @gmt.strftime('%A') %></div>
+        </div> <!-- .forecast-header -->
+        <div class="forecast-content">
+          <div class="forecast-icon">
+            <img src="/assets/icons/<%= day["icon"]%>.svg" alt="" width=48>
+          </div>
+          <div class="degree"><%=day["apparentTemperatureMax"]%><sup>o</sup>F</div>
+          <small><%=day["apparentTemperatureMin"]%><sup>o</sup></small>
+        </div>
+      </div>
+      <%end%>
+    </div>
+  </div>
+</div>
+<% if @locations.count > 0 %>
+<main class="container">
+  <div class="fullwidth-block">
+    <div class="container">
+      <h2 class="section-title">Search History</h2>
+      <div class="row">
+        <%@locations.each do |location| %>
+        <%@cast = ForecastIO.forecast(location.latitude,location.longitude)%>
+        <%@forcast = @cast["currently"]%>
+        <div class="col-md-3 col-sm-6">
+          <div class="today forecast">
+            <div class="forecast-header">
+              <div class="day"><%= Time.at(@forcast["time"]).strftime('%A') %></div>
+              <div class="date"><%= Time.at(@forcast["time"]).strftime('%d') %> <%= Time.at(@forcast["time"]).strftime('%b') %></div>
+            </div> <!-- .forecast-header -->
+            <div class="forecast-content">
+              <div class="location"><%= location.city %></div>
+              <div class="degree">
+                <div class="num"><%= @forcast["temperature"]%><sup>o</sup>F</div>
+                <div class="forecast-icon">
+                  <img src="/assets/icons/<%= @forcast["icon"]%>.svg" alt="" width=90>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</main> <!-- .main-content -->
+<% end %>
