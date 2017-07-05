@@ -6,7 +6,7 @@
       <input type="submit" value="Find">
     </form-->
     <%= form_tag("/locations", method: "post", class:"find-location") do %>
-      <input type="text" name="city" placeholder="Find your location...">
+      <input type="text" required name="city" placeholder="Find your location...">
       <input type="submit" value="Find">
     <% end %>
 
