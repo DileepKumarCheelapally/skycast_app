@@ -56,7 +56,8 @@ class UsersController < ApplicationController
       # end
 
       @loc = Geocoder.search(request.remote_ip)
-      @location.city = @loc[0].city
+      # @location.city = @loc[0].city
+      @location.city = "Albuquerque"
       puts "putting location city"
       puts @location.city
       @location.user_id = @userid

@@ -1,9 +1,10 @@
-<div class="container">
-  <h1>Welcome to SkyCast Inc. </h1>
-
-<p>Please login</p>
-<%= form_tag("/users", method: "post") do %>
-  <input type="text" name="username" placeholder="Username">
-  <input type="submit" value="Sign In">
-<% end %>
+<div class="hero" data-bg-image="/assets/banner.png">
+  <div class="container">
+    <h1>Welcome to SkyCast Inc. </h1>
+    <p>Please login</p>
+    <%= form_tag("/users", method: "post", class:"find-location") do %>
+    <input type="text" name="username" placeholder="Username">
+    <input type="submit" value="Sign In">
+    <% end %>
+  </div>
 </div>

@@ -53,23 +53,22 @@
     </div>
   </div>
 </div>
-<% if @locations.count > 0 %>
+<% if @updateLocations.count > 0 %>
 <main class="container">
   <div class="fullwidth-block">
     <div class="container">
       <h2 class="section-title">Search History</h2>
       <div class="row">
-        <%@locations.each do |location| %>
+        <%@updateLocations.each do |location| %>
         <%@cast = ForecastIO.forecast(location.latitude,location.longitude)%>
         <%@forcast = @cast["currently"]%>
         <div class="col-md-3 col-sm-6">
           <div class="today forecast">
             <div class="forecast-header">
-              <div class="day"><%= Time.at(@forcast["time"]).strftime('%A') %></div>
-              <div class="date"><%= Time.at(@forcast["time"]).strftime('%d') %> <%= Time.at(@forcast["time"]).strftime('%b') %></div>
+              <div class="day"><%= Time.at(@forcast["time"]).strftime('%A') %> <%= Time.at(@forcast["time"]).strftime('%d') %> <%= Time.at(@forcast["time"]).strftime('%b') %></div>
             </div> <!-- .forecast-header -->
             <div class="forecast-content">
-              <div class="location"><%= location.city %></div>
+              <h3 class="location"><%= location.city %></h3>
               <div class="degree">
                 <div class="num"><%= @forcast["temperature"]%><sup>o</sup>F</div>
                 <div class="forecast-icon">

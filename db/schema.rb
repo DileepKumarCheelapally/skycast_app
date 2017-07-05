@@ -12,16 +12,13 @@
 
 ActiveRecord::Schema.define(version: 20170702235945) do
 
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
   create_table "locations", force: :cascade do |t|
     t.string "city"
     t.string "state"
     t.string "country"
     t.float "latitude"
     t.float "longitude"
-    t.bigint "user_id"
+    t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_locations_on_user_id"
@@ -34,5 +31,4 @@ ActiveRecord::Schema.define(version: 20170702235945) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
-  add_foreign_key "locations", "users"
 end

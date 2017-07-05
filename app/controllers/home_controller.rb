@@ -17,6 +17,13 @@ class HomeController < ApplicationController
       @dailyWeather = @forecast["daily"]["data"].first(7)
       puts @dailyWeather.first["time"]
       @dailyWeather.shift(1)
+      @updateLocations = Array.new()
+      if(@locations.count <=4)
+        @locations.each do |location|
+          @updateLocations.append(location)
+        end
+      end
+      @updateLocations.shift(1)
       # for each @locations do |location|
       #   @cast = ForecastIO.forecast(location.latitude,location.longitude)
       #   @forcast.push(@cast["currently"])
@@ -34,7 +41,7 @@ class HomeController < ApplicationController
     #   format.html
     #   format.json { render json: [1,2,3,4,5] }
     # end
-    @sevenyears = 2592000
+    @sevenyears = 31536000
     @time = Time.now
     # @time = @time + @sevenyears
     # @time = @time.to_i
