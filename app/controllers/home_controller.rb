@@ -1,7 +1,7 @@
 class HomeController < ApplicationController
   def index
 
-    @locations = Location.where(user_id: session[:userid]).order('created_at DESC').limit(4)
+    @locations = Location.where(user_id: session[:userid]).order('created_at DESC').limit(5)
     if @locations.count > 0
       @lat = @locations.first.latitude
       @lng = @locations.first.longitude
@@ -18,10 +18,8 @@ class HomeController < ApplicationController
       puts @dailyWeather.first["time"]
       @dailyWeather.shift(1)
       @updateLocations = Array.new()
-      if(@locations.count <=4)
-        @locations.each do |location|
-          @updateLocations.append(location)
-        end
+      @locations.each do |location|
+        @updateLocations.append(location)
       end
       @updateLocations.shift(1)
       # for each @locations do |location|
