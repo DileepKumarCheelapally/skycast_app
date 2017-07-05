@@ -34,6 +34,8 @@ gem 'geocoder'
 #gem "d3-rails"
 gem "chartkick"
 gem "pg"
+#gem "rails3_serve_static_assets"
+gem "webpacker"
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
 # Use ActiveModel has_secure_password
